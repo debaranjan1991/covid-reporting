@@ -1,0 +1,46 @@
+{
+	"name": "PL_Cases_And_Deaths",
+	"properties": {
+		"activities": [
+			{
+				"name": "Process_CaesesAndDeaths",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_processed_cases_and_deaths_file",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CopyToSQLDB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process_CaesesAndDeaths",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_copy_cases_deaths_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Parent Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-08T15:20:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

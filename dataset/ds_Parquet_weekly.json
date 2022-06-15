@@ -1,0 +1,24 @@
+{
+	"name": "ds_Parquet_weekly",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ls_adlsg2_covidreportingdl1991",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Processed"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"folderPath": "ecdc/hospital_admission_daily",
+				"fileSystem": "processed"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
