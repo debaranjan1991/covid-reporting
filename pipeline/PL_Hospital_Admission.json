@@ -1,0 +1,66 @@
+{
+	"name": "PL_Hospital_Admission",
+	"properties": {
+		"activities": [
+			{
+				"name": "Process HospitalAdmission",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_processed_hospital_admission",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CopyToSQLDB_Weekly",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process HospitalAdmission",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_copy_hospital_admission_weekly_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CopyToSQLDB_Daily",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process HospitalAdmission",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_copy_hospital_admission_daily_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Parent Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-08T15:20:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

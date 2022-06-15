@@ -1,0 +1,46 @@
+{
+	"name": "PL_TestingData",
+	"properties": {
+		"activities": [
+			{
+				"name": "Process_Testing_Data",
+				"type": "ExecutePipeline",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_processed_testing_data",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			},
+			{
+				"name": "CopyTOSQLDB",
+				"type": "ExecutePipeline",
+				"dependsOn": [
+					{
+						"activity": "Process_Testing_Data",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"pipeline": {
+						"referenceName": "pl_copy_testing_to_sql",
+						"type": "PipelineReference"
+					},
+					"waitOnCompletion": true
+				}
+			}
+		],
+		"folder": {
+			"name": "Parent Pipelines"
+		},
+		"annotations": [],
+		"lastPublishTime": "2022-06-08T15:20:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
